@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Task - MilanoTask App{% endblock %}
+
+{% block content %}
+<div class="form-container mx-auto" style="max-width: 500px;">
+    <h1 class="mb-4">{{ legend }}</h1>
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="h4 mb-0">Create New Task</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('tasks.add_task') }}">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.title.label(class="form-label") }}
+                    {% if form.title.errors %}
+                        {{ form.title(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.title(class="form-control") }}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    {{ form.description.label(class="form-label") }}
+                    {% if form.description.errors %}
+                        {{ form.description(class="form-control is-invalid", rows="3") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.description.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.description(class="form-control", rows="3") }}
+                    {% endif %}
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a href="{{ url_for('tasks.dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
